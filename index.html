@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Boxput – Multi Tool Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet" />
+  <style>  body {
+            margin: 0;
+            font-family: 'Orbitron', sans-serif;
+            background-color: #0d0f14;
+            color: #ffffff;
+        }
+
+        .navbar {
+          margin-left: 23.5%;
+            background-color: #1c222d;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 100px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 24px;
+            color: #42f8f5;
+            text-shadow: 0 0 10px rgba(66, 248, 245, 0.6);
+        }
+
+        .nav-links a {
+            color: #e0e0e0;
+            margin: 0 15px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .nav-links a:hover {
+            text-shadow: 0 0 10px rgba(66, 248, 245, 0.6);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .sidebar {
+            background-color: #12151a;
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(66, 248, 245, 0.6);
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-header {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .tool-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tool-list li {
+            margin: 10px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tool-list li:hover {
+            text-shadow: 0 0 10px rgba(66, 248, 245, 0.6);
+        }
+
+        .content {
+            margin-left: 270px; /* Increased margin to prevent overlap */
+            padding: 20px;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .cta-button {
+            background-color: #12151a;
+            color: #42f8f5;
+            border: 2px solid #42f8f5;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: #42f8f5;
+            color: #12151a;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .tool-card {
+            background-color: #1c222d;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(66, 248, 245, 0.6);
+            transition: all 0.3s;
+        }
+
+        .tool-card:hover {
+            box-shadow: 0 0 20px rgba(66, 248, 245, 0.6);
+        }
+
+        .tool-button {
+            background-color: #12151a;
+            color: #42f8f5;
+            border: 2px solid #42f8f5;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tool-button:hover {
+            background-color: #42f8f5;
+            color: #12151a;
+        }
+
+        .footer {
+            background-color: #1c222d;
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .footer-links a {
+            color: #e0e0e0;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-content {
+            background-color: #1c222d;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #42f8f5;
+            width: 80%;
+            border-radius: 10px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #42f8f5;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            .hamburger {
+                display: block;
+            }
+            .content {
+                margin-left: 20px; /* Adjust for mobile */
+            }
+            .tools-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+        }</style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">Boxput – Multi Tool Hub</div>
+    <nav class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#tools">Tools</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="hamburger" onclick="toggleSidebar()">☰</div>
+  </header>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">Tools</div>
+    <ul class="tool-list">
+      <li onclick="openToolModal('merge')">🔗 Merge PDF</li>
+      <li onclick="openToolModal('pdfToWord')">📄 PDF to Word</li>
+      <li onclick="openToolModal('split')">✂️ Split PDF</li>
+      <li onclick="openToolModal('compress')">📦 Compress PDF</li>
+    </ul>
+  </aside>
+
+  <main class="content">
+    <section class="hero">
+      <h1>Welcome to Boxput</h1>
+      <p>Your all-in-one tool hub for PDF and more!</p>
+      <button class="cta-button" onclick="openToolModal('pdfToWord')">Get Started</button>
+    </section>
+    <section class="tools-grid">
+      <div class="tool-card">
+        <h2>Merge PDF</h2>
+        <p>Combine multiple PDF files into one.</p>
+        <button class="tool-button" onclick="openToolModal('merge')">Open Tool</button>
+      </div>
+      <div class="tool-card">
+        <h2>PDF to Word</h2>
+        <p>Convert PDF files to Word documents.</p>
+        <button class="tool-button" onclick="openToolModal('pdfToWord')">Open Tool</button>
+      </div>
+      <div class="tool-card">
+        <h2>Split PDF</h2>
+        <p>Split a PDF file into individual pages.</p>
+        <button class="tool-button" onclick="openToolModal('split')">Open Tool</button>
+      </div>
+      <div class="tool-card">
+        <h2>Compress PDF</h2>
+        <p>Reduce PDF file size.</p>
+        <button class="tool-button" onclick="openToolModal('compress')">Open Tool</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© 2025 Boxput. All Rights Reserved.</p>
+    <div class="footer-links">
+      <a href="#privacy">Privacy Policy</a> | 
+      <a href="#terms">Terms</a> | 
+      <a href="#contact">Contact</a>
+    </div>
+  </footer>
+
+  <div class="modal" id="toolModal">
+    <div class="modal-content">
+      <span class="close" onclick="closeToolModal()">&times;</span>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <script>
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('active');
+    }
+
+    function openToolModal(tool) {
+      const modal = document.getElementById('toolModal');
+      const modalBody = document.getElementById('modalBody');
+      modal.style.display = "block";
+      modalBody.innerHTML = `<h2>${tool.charAt(0).toUpperCase() + tool.slice(1)} Tool</h2>
+        <p>Select a file to upload:</p>
+        <input type="file" id="fileInput" ${tool === 'merge' ? 'multiple' : ''} />
+        <button class="tool-button" onclick="processTool('${tool}')">Process Tool</button>
+        <div id="statusMessage" style="margin-top: 10px;"></div>
+        <a id="downloadLink" style="display: none;" download class="tool-button">Download Output</a>`;
+    }
+
+    function closeToolModal() {
+      const modal = document.getElementById('toolModal');
+      modal.style.display = "none";
+      const link = document.getElementById('downloadLink');
+      if (link.href) URL.revokeObjectURL(link.href);
+      document.getElementById('fileInput').value = '';
+      document.getElementById('statusMessage').innerText = '';
+      link.style.display = 'none';
+    }
+
+    async function processTool(tool) {
+      const fileInput = document.getElementById('fileInput');
+      const statusMessage = document.getElementById('statusMessage');
+      const downloadLink = document.getElementById('downloadLink');
+      if (fileInput.files.length === 0) {
+        statusMessage.innerText = "Please select a file.";
+        return;
+      }
+
+      statusMessage.innerText = "Processing...";
+      const formData = new FormData();
+      for (const file of fileInput.files) formData.append(tool === 'merge' ? 'files' : 'file', file);
+
+      let endpoint = '';
+      if (tool === 'pdfToWord') endpoint = 'http://localhost:5000/convert/pdf-to-word';
+      else if (tool === 'merge') endpoint = 'http://localhost:5000/merge/pdf';
+      else if (tool === 'split') endpoint = 'http://localhost:5000/split/pdf';
+      else if (tool === 'compress') endpoint = 'http://localhost:5000/compress/pdf';
+
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        body: formData
+      });
+
+      if (!response.ok) {
+        statusMessage.innerText = 'Something went wrong.';
+        return;
+      }
+
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      downloadLink.href = url;
+      downloadLink.download = `${tool}-output.${tool === 'pdfToWord' ? 'docx' : 'pdf'}`;
+      downloadLink.style.display = 'inline-block';
+      statusMessage.innerText = `${tool.charAt(0).toUpperCase() + tool.slice(1)} completed!`;
+    }
+
+    window.onclick = function (event) {
+      const modal = document.getElementById('toolModal');
+      if (event.target == modal) {
+        closeToolModal();
+      }
+    }
+  </script>
+</body>
+</html>
